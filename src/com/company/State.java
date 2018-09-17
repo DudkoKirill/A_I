@@ -8,12 +8,12 @@ public class State {
     int hash;
     int deep;
     static int count=0;
-    ArrayList<State> childs;
+    ArrayList<State> childes;
     int fields[];
 
     State(int[] x , State Par, int empt) {
         fields= new int[9];
-        childs = new ArrayList<State>();
+        childes = new ArrayList<State>();
         hash=0;
         int j=100000000;
         for (int i=0;i<9;i++) {
@@ -48,7 +48,7 @@ public class State {
             copy = copyFields[empty];
             copyFields[empty] = copyFields [(int)childFields.get(i)];
             copyFields[(int)childFields.get(i)] = copy;
-            childs.add(new State(copyFields,this,(int)childFields.get(i)));
+            childes.add(new State(copyFields,this,(int)childFields.get(i)));
         }
     }
 

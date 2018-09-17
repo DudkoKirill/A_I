@@ -24,8 +24,8 @@ public class Main {
             else if (hashCheck.indexOf(States.get(0).hash) == -1) {
                 hashCheck.add(States.get(0).hash);
                 States.get(0).setChilds();
-                for (int i=0; i<States.get(0).childs.size();i++)
-                    States.add(States.get(0).childs.get(i));
+                for (int i = 0; i<States.get(0).childes.size(); i++)
+                    States.add(States.get(0).childes.get(i));
             }
             States.remove(0);
         }
