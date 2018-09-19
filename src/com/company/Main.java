@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Main {
 
@@ -25,26 +26,22 @@ public class Main {
         }
         if (!fail) {
             State startState = new State(start, null, empty);
+            width(startState);
             depth(startState);
         }
     }
 
     static void width(State startState)
     {
-        State current;
+
+        System.out.println("Поиск в ширину");
+        Date start = new Date();
         ArrayList hashCheck = new ArrayList();
         ArrayList<State> States = new ArrayList<>();
         States.add(startState);
         while(States.size()>0) {
-            if(States.get(0).isFinish()) {
-                current = States.get(0);
-                while (current!=null)
-                {
-                    System.out.println(current.hash);
-                    current=current.parent;
-                }
-                System.out.print("\n\n");
-            }
+            if(States.get(0).isFinish())
+                System.out.println("Решение найдено! Глубина: "+States.get(0).deep + " Время решения:" + ((new Date()).getTime() - start.getTime() + " мс"));
             else if (hashCheck.indexOf(States.get(0).hash) == -1) {
                 hashCheck.add(States.get(0).hash);
                 States.get(0).setChilds();
@@ -57,20 +54,14 @@ public class Main {
 
     static void depth(State startState)
     {
-        State current;
+        System.out.println("Поиск в глубину");
+        Date start = new Date();
         ArrayList hashCheck = new ArrayList();
         ArrayList<State> States = new ArrayList<>();
         States.add(startState);
         while(States.size()>0) {
-            if(States.get(0).isFinish()) {
-                current = States.get(0);
-                while (current!=null)
-                {
-                    System.out.println(current.hash);
-                    current=current.parent;
-                }
-                System.out.print("\n\n");
-            }
+            if(States.get(0).isFinish())
+                System.out.println("Решение найдено! Глубина: "+States.get(0).deep + " Время решения:" + ((new Date()).getTime() - start.getTime() + " мс"));
             else if (hashCheck.indexOf(States.get(0).hash) == -1) {
                 hashCheck.add(States.get(0).hash);
                 States.get(0).setChilds();
