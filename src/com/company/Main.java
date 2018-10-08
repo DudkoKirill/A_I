@@ -13,7 +13,8 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static void main(String[] args) {
-        int[] start = {5, 8, 3, 4, 0, 2, 7, 6, 1};
+        int[] start = {7, 2, 4, 5, 0, 6, 8, 3, 1};
+        chaos(start);
         int check[] = {1, 1, 1, 1, 1, 1, 1, 1, 1};
         int empty = 0;
         boolean fail = false;
@@ -34,6 +35,14 @@ public class Main {
             depth(null);
             width(null);
         }
+    }
+
+    static void chaos(int[] state)
+    {
+        int chao=0;
+        for (int i=0;i<9;i++)
+            chao+=Math.abs(state[i]-i);
+        System.out.println("Значение энтропии: " + chao);
     }
 
     static void width(State startStat) {
