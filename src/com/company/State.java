@@ -7,6 +7,7 @@ class State {
     private int empty;
     int hash;
     int deep;
+    int func;
     List<State> childes;
     private int fields[];
 
@@ -23,6 +24,7 @@ class State {
             deep = 0;
         else
             deep = par.deep + 1;
+        func=getH1();
     }
 
     void setChilds() {
@@ -48,6 +50,20 @@ class State {
     }
 
     Boolean isFinish() {
-        return hash == 12345678;
+        return hash == 123456780;
+    }
+
+    int getH1(){
+        int result=0;
+        for(int i=0;i<8;i++){
+            if(i+1!=fields[i])
+                result++;
+        }
+        if(fields[8]!=0) result++;
+            return result;
+    }
+
+    int getH2(){
+        return 0;
     }
 }
