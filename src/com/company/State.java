@@ -1,59 +1,75 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class State {
-    State parent;
-    int empty;
+class State {
+    private int empty;
     int hash;
     int deep;
-    static int count=0;
-    ArrayList<State> childes;
-    int fields[];
+    int func;
+    List<State> childes;
+    private int fields[];
 
-    State(int[] x , State Par, int empt) {
-        fields= new int[9];
-        childes = new ArrayList<State>();
-        hash=0;
-        int j=100000000;
-        for (int i=0;i<9;i++) {
-            fields[i]=x[i];
-            hash+=x[i]*j;
-            j/=10;
+    State(int[] x, State par, int empt) {
+        fields = new int[9];
+        hash = 0;
+        int j = 100000000;
+        for (int i = 0; i < 9; i++, j /= 10) {
+            fields[i] = x[i];
+            hash += x[i] * j;
         }
-        parent = Par;
         empty = empt;
-        count ++;
-        if (parent==null)
-            deep=0;
+        if (par == null)
+            deep = 0;
         else
-            deep=parent.deep+1;
+            deep = par.deep + 1;
+        func = getH2();
     }
 
-    void setChilds()
-    {
-        ArrayList<Integer> childFields = new ArrayList();
-        if (empty%3 >=1)
-            childFields.add(empty-1);
-        if (empty%3 <=1)
-            childFields.add(empty+1);
-        if (empty-3 >=0)
-            childFields.add(empty-3);
-        if (empty+3 <=8)
-            childFields.add(empty+3);
+    void setChilds() {
+        childes = new ArrayList<>();
+        List<Integer> childFields = new ArrayList();
+        if (empty % 3 >= 1)
+            childFields.add(empty - 1);
+        if (empty % 3 <= 1)
+            childFields.add(empty + 1);
+        if (empty - 3 >= 0)
+            childFields.add(empty - 3);
+        if (empty + 3 <= 8)
+            childFields.add(empty + 3);
         int copyFields[];
         int copy;
-        for (int i =0; i<childFields.size();i++) {
+        for (int i = 0; i < childFields.size(); i++) {
             copyFields = fields.clone();
             copy = copyFields[empty];
-            copyFields[empty] = copyFields [(int)childFields.get(i)];
-            copyFields[(int)childFields.get(i)] = copy;
-            childes.add(new State(copyFields,this,(int)childFields.get(i)));
+            copyFields[empty] = copyFields[childFields.get(i)];
+            copyFields[childFields.get(i)] = copy;
+            childes.add(new State(copyFields, this, childFields.get(i)));
         }
     }
 
-    Boolean isFinish()
-    {
-        return hash==12345678;
+    Boolean isFinish() {
+        return hash == 123456780;
+    }
+
+    int getH1() {
+        int result = 0;
+        for (int i = 0; i < 8; i++) {
+            if (i + 1 != fields[i])
+                result++;
+        }
+        if (fields[8] != 0) result++;
+        return result;
+    }
+
+    int getH2() {
+        int x1;
+        int result = 0;
+        for (int i = 0; i < 9; i++) {
+            x1 = (fields[i] + 8) % 9;
+            result += Math.abs(i % 3 - x1 % 3) + Math.abs(i / 3 - x1 / 3);
+        }
+        return result;
     }
 }
